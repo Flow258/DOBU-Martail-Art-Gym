@@ -8,60 +8,60 @@
  * - signup.html: Registration page
  */
 
-/* Importing Google Fonts: Arial and Helvetica */
+/************************** Importing Google Fonts: Arial and Helvetica **************************/
 @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&family=Helvetica:wght@400;700&display=swap');
 
-/* Defining custom font variables */
+/************************* Defining custom font variables ******************************/
 :root {
     --header-font: 'Helvetica', sans-serif;
     --body-font: 'Arial', sans-serif;
 }
 
-/* Setting font styles for headers */
+/************************** Setting font styles for headers **************************/
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--header-font);
     font-weight: 700;
 }
 
-/* Setting font styles for body text */
+/************************** Setting font styles for body text **************************/
 body {
     font-family: var(--body-font);
     font-weight: 400;
 }
 
-/* Styling for navigation links */
+/************************** Styling for navigation links **************************/
 .nav-item .nav-link {
     color: rgba(255, 255, 255, 0.55) !important;
 }
 
-/* Hover effect for navigation links */
+/************************** Hover effect for navigation links **************************/
 .nav-item .nav-link:hover {
     color: rgba(255, 255, 255, 0.75) !important;
 }
 
-/* Active state styling for navigation links */
+/************************** Active state styling for navigation links **************************/
 .navbar-nav .nav-link.active {
     color: #fff !important;
 }
 
-/* Hover effect for join-signup button */
+/************************** Hover effect for join-signup button **************************/
 .join-signup-btn:hover {
     background-color: red !important;
 }
 
-/* Hover effect for buttons */
+/************************** Hover effect for buttons **************************/
 .btn:hover {
     background-color: red !important;
     border-color: red !important;
     color: white !important;
 }
 
-/* Hover effect for light buttons */
+/************************** Hover effect for light buttons **************************/
 .btn-light:hover {
     color: white !important;
 }
 
-/* Styling for chat button */
+/************************** Styling for chat button **************************/
 .chat-button {
     position: fixed;
     bottom: 20px;
@@ -77,7 +77,7 @@ body {
     z-index: 1000;
 }
 
-/* Styling for chat modal */
+/************************** Styling for chat modal **************************/
 .chat-modal {
     position: fixed;
     bottom: 90px;
@@ -90,7 +90,7 @@ body {
     z-index: 1000;
 }
 
-/* Styling for chat header */
+/************************** Styling for chat header **************************/
 .chat-header {
     background: #ff0000;
     color: white;
@@ -100,21 +100,16 @@ body {
     align-items: center;
 }
 
-/* Styling for back button in chat header */
+/************************** Styling for back button in chat header **************************/
 .chat-header .back-button {
     color: white;
     margin-right: 10px;
     cursor: pointer;
 }
 
-/* Styling for chat body */
+/************************** Styling for chat body **************************/
 .chat-body {
     padding: 20px;
-}
-
-/* Styling for form groups */
-.form-group {
-    margin-bottom: 15px;
 }
 
 /* Styling for form controls */
@@ -149,43 +144,6 @@ body {
     padding: 4rem 0;
     text-align: center;
     margin: 2rem 0;
-}
-
-/* Styling for custom background section */
-.my-6 {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('image/footer_bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 60px 0;
-    text-align: center;
-    color: rgba(235, 235, 235, 0.986);
-}
-
-/* Styling for membership carousel */
-.membership-carousel {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('image/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 60px 0;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.445);
-}
-
-/* Styling for membership cards */
-.membership-card {
-    height: 300px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #dee2e6;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    margin: 0 auto;
-    max-width: 500px;
 }
 
 /* Styling for carousel controls */
@@ -317,9 +275,6 @@ body {
     color: #777;
 }
 
-
-
-
 /* Add this to your CSS */
 .chat-modal {
     position: fixed;
@@ -419,8 +374,6 @@ body {
     color: white;
     font-size: 24px;
 }
-
-
 
 /*chat box end*/
 
