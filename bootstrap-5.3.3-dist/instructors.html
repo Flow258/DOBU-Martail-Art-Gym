@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO-BU - Instructors</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+    <!-- Font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&family=Helvetica:wght@400;700&display=swap');
+                
+        :root {
+            --header-font: 'Helvetica', sans-serif;
+            --body-font: 'Arial', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--header-font);
+            font-weight: 700;
+        }
+
+        body {
+            font-family: var(--body-font);
+            font-weight: 400;
+        }
+    </style>
+
+    <style>
+        .sidebar {
+            background-color: #242424;
+            padding: 20px;
+            color: #cccccc;
+        }
+        
+        .instructor-card {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 15px;
+            height: 100%;
+        }
+
+        .instructor-card img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .instructor-placeholder {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .instructor-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 49%, #ddd 49%, #ddd 51%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, #ddd 49%, #ddd 51%, transparent 51%);
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .social-icons a {
+            margin-right: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: red !important;
+            border-color: red !important;
+            color: white !important;
+        }
+        
+        .btn-light:hover {
+            color: white !important;
+        }
+    </style>
+
+</head>
+
+<!-- Body -->
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/LOGO_Do.png" alt="DO-BU Logo" height="40px" width="86px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="membership.html">Membership & Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html">COURSES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="timetable.html">TimeTable</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="instructors.html">Instructors</a></li>
+                    <a href="sign-up.html" class="btn btn-light join-signup-btn">Join sign-up</a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <h4>Martial Arts</h4>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="karate">
+                    <label class="form-check-label" for="karate">Karate</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="judo">
+                    <label class="form-check-label" for="judo">Judo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="muaythai">
+                    <label class="form-check-label" for="muaythai">Muay Thai</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="jiujitsu">
+                    <label class="form-check-label" for="jiujitsu">Jiu-jitsu</label>
+                </div>
+                <div class="form-check" hidden>
+                    <input class="form-check-input" type="checkbox" id="kidskarate">
+                    <label class="form-check-label" for="kidskarate">Kids Karate</label>
+                </div>
+                <div class="form-check" hidden>
+                    <input class="form-check-input" type="checkbox" id="kidsjudo">
+                    <label class="form-check-label" for="kidsjudo">Kids Judo</label>
+                </div>
+                <div class="form-check" hidden>
+                    <input class="form-check-input" type="checkbox" id="kidsjiujitsu">
+                    <label class="form-check-label" for="kidsjiujitsu">Kids Jiu-jitsu</label>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10">
+                <h1 class="my-4">Instructors</h1>
+                <div class="row g-4" id="instructorGrid">
+
+                    <!-- Instructor 1 -->
+                    <div class="col-md-4 instructor-item" data-categories="judo,jiujitsu,karate">
+                        <div class="instructor-card">
+                            <img src="image/Mauricio_Gomez.jpeg" alt="Mauricio Gomez" class="instructor-image">
+                            <h5>Mauricio Gomez (GYM Owner/Head martial arts coach)</h5>
+                            <p>Credentials in martial arts<br>
+                               4th Dan Blackbelt Judo<br>
+                               3rd Dan Blackbelt Jiu-jitsu<br>
+                               1st Dan Blackbelt Karate</p>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 2 -->
+                    <div class="col-md-4 instructor-item" data-categories="karate">
+                        <div class="instructor-card">
+                            <img src="image/Sarah_Nova.jpg" alt="Mauricio Gomez" class="instructor-image">
+                            <h5>Sarah Nova (assistant martial arts coach)</h5>
+                            <p>5th Dan karate</p>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 3 -->
+                    <div class="col-md-4 instructor-item" data-categories="jiujitsu,judo">
+                        <div class="instructor-card">
+                            <img src="image/Guy_Victory.jpg" alt="Mauricio Gomez" class="instructor-image">
+                            <h5>Guy Victory (assistant martial arts coach)</h5>
+                            <p>2nd Dan Blackbelt Jiu-jitsu<br>
+                               1st Dan Blackbelt Judo</p>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 4 -->
+                    <div class="col-md-4 instructor-item" data-categories="karate,muaythai">
+                        <div class="instructor-card">
+                            <img src="image/Morris_Davis.jpg" alt="Morris Davis" class="instructor-image">
+                            <h5>Morris Davis (assistant martial arts coach)</h5>
+                            <p>Accredited Muay Thai coach<br>
+                               2nd Dan Blackbelt karate</p>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 5 -->
+                    <div class="col-md-4 instructor-item" data-categories="fitness">
+                        <div class="instructor-card">
+                            <img src="image/Traci_Santiago.jpg" alt="Traci Santiago" class="instructor-image">
+                            <h5>Traci Santiago (fitness coach)</h5>
+                            <p>BSc in Physiotherapy<br>
+                               MSc in Sports Science<br>
+                               Strength training<br>
+                               Personal fitness training</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>123 Martial Arts Way<br>City, State 12345<br>Phone: (123) 456-7890</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Schedule</a></li>
+                        <li><a href="#" class="text-white">Programs</a></li>
+                        <li><a href="#" class="text-white">Membership</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Font Awesome -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('.form-check-input');
+        const instructors = document.querySelectorAll('.instructor-item');
+
+        function filterInstructors() {
+            const selectedCategories = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.id);
+
+            instructors.forEach(instructor => {
+                if (selectedCategories.length === 0) {
+                    // Show all if no filters selected
+                    instructor.style.display = '';
+                    return;
+                }
+
+                const instructorCategories = instructor.dataset.categories.split(',');
+                const hasMatch = selectedCategories.some(category => 
+                    instructorCategories.includes(category)
+                );
+
+                instructor.style.display = hasMatch ? '' : 'none';
+            });
+        }
+
+        // Add event listeners to checkboxes
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', filterInstructors);
+        });
+    });
+    </script>
+</body>
+</html> 

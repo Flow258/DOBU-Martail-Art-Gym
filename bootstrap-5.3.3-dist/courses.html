@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO-BU - Courses</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .course-card {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+
+        .course-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .course-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 49%, #ddd 49%, #ddd 51%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, #ddd 49%, #ddd 51%, transparent 51%);
+        }
+
+        .course-content {
+            padding: 15px;
+        }
+
+        .featured-course {
+            grid-column: span 2;
+        }
+
+        .btn:hover {
+            background-color: red !important;
+            border-color: red !important;
+            color: white !important;
+        }
+        
+        .btn-light:hover {
+            color: white !important;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/LOGO_Do.png" alt="DO-BU Logo" height="40px" width="86px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="membership.html">Membership & Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="courses.html">COURSES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="timetable.html">TimeTable</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="instructors.html">Instructors</a></li>
+                    <a href="sign-up.html" class="btn btn-light join-signup-btn">Join sign-up</a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Courses Grid -->
+    <div class="container my-5">
+        <h1 class="mb-4">Our Courses</h1>
+        
+        <!-- Regular Courses Grid -->
+        <div class="row g-4">
+            <!-- Course 1 -->
+            <div class="col-md-6">
+                <div class="course-card">
+                    <img src="image/Karate.jpg" alt="Karate" class="img-fluid">
+                    <div class="course-content">
+                        <h3>Karate</h3>
+                        <p>Learn traditional karate techniques, forms, and self-defense. Suitable for beginners to advanced practitioners.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="col-md-6">
+                <div class="course-card">
+                    <img src="image/Judo.jpg" alt="Judo" class="img-fluid">
+                    <div class="course-content">
+                        <h3>Judo</h3>
+                        <p>Master the art of throws and grappling. Focus on balance, technique, and competition preparation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="col-md-6">
+                <div class="course-card">
+                    <img src="image/Jiu-jitsu.jpg" alt="Jiu-jitsu" class="img-fluid">
+                    <div class="course-content">
+                        <h3>Jiu-jitsu</h3>
+                        <p>Ground-based martial art focusing on submissions and control. All skill levels welcome.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="col-md-6">
+                <div class="course-card">
+                    <img src="image/Muay Thai.jpg" alt="Muay Thai" class="img-fluid">
+                    <div class="course-content">
+                        <h3>Muay Thai</h3>
+                        <p>Thai boxing incorporating strikes, clinch work, and traditional techniques.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 5 -->
+            <div class="col-md-6">
+                <div class="course-card">
+                    <img src="image/KidsPrograms.jpg" alt="Kids Programs" class="img-fluid">
+                    <div class="course-content">
+                        <h3>Kids Programs</h3>
+                        <p>Specialized martial arts classes for children, focusing on discipline and fun.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 6 -->
+            <div class="col-md-6">
+                <div class="course-card">
+                    <img src="image/FitnessClasses.jpg" alt="Fitness Classes" class="img-fluid">
+                    <div class="course-content">
+                        <h3>Fitness Classes</h3>
+                        <p>General fitness and conditioning classes to complement martial arts training.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Course -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="course-card">
+                    <img src="image/MixedMartialArts.jpg" alt="Mixed Martial Arts" class="img-fluid">
+                    <div class="course-content">
+                        <h3>Featured Program: Mixed Martial Arts</h3>
+                        <p>Comprehensive training combining multiple disciplines for complete fighter development.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>123 Martial Arts Way<br>City, State 12345<br>Phone: (123) 456-7890</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Schedule</a></li>
+                        <li><a href="#" class="text-white">Programs</a></li>
+                        <li><a href="#" class="text-white">Membership</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Font Awesome -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+</body>
+</html> 

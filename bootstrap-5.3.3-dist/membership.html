@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership & Pricing - DO-BU</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <style>
+    .membership-carousel {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('image/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 60px 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.445);
+}
+
+.membership-card {
+    height: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.322);
+    border: 1px solid #00000000;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+}
+
+.carousel-control-prev {
+    left: -50px;
+}
+
+.carousel-control-next {
+    right: -50px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000;
+}
+
+.join-button {
+    display: inline-block;
+    width: 200px;
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid #fff;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.join-button:hover {
+    background: transparent;
+    color: white;
+}
+
+/* Footer social icons */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: #666;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #000;
+}
+
+.description {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.navbar-nav .nav-link.active {
+            color: #fff !important; /* Ensure the active link is white */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/LOGO_Do.png" alt="DO-BU Logo" height="40px" width="86px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Membership & Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html">COURSES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="timetable.html">TimeTable</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="instructors.html">Instructors</a></li>
+                    <a href="sign-up.html" class="btn btn-light join-signup-btn">Join sign-up</a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!------------------------------ Membership Carousel ------------------------------------>
+    <div class="membership-carousel">
+        <div class="container">
+            <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="10000">
+                        <div class="membership-card">
+                            <h2>Basic Membership</h2>
+                            <h3>€25/month</h3>
+                            <ul class="list-unstyled">
+                                <li>1 martial art</li>
+                                <li>2 sessions per week</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <div class="membership-card">
+                            <h2>Intermediate Membership</h2>
+                            <h3>€35/month</h3>
+                            <ul class="list-unstyled">
+                                <li>1 martial art</li>
+                                <li>3 sessions per week</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="membership-card">
+                            <h2>Advanced Membership</h2>
+                            <h3>€45/month</h3>
+                            <ul class="list-unstyled">
+                                <li>Any 2 martial arts</li>
+                                <li>5 sessions per week</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="membership-card">
+                            <h2>Elite Membership</h2>
+                            <h3>€60/month</h3>
+                            <ul class="list-unstyled">
+                                <li>Unlimited classes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <a href="sign-up.html" class="join-button">Join</a>
+        </div>
+    </div>
+
+        <!----------------------- Main Values Section ------------------------------------>
+        <div class="carousel-container bg-light py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Exclusive Offers</h2>
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <i class="#"></i>
+                        <h4>Junior Membership</h4>
+                        <p>Can attend all-kind martial arts sessions</p>
+                        <h1>€25</h1>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="#"></i>
+                        <h4>Fitness Training</h4>
+                        <p>Six-week beginners' self-defence course (2 * 1-hour session per week)</p>
+                        <h1>€180</h1>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="#"></i>
+                        <h4>Personal Fitness Training</h4>
+                        <p>per hour</p>
+                        <h1>€35</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------           Sub Values Section ------------------------------------>
+        <div class="carousel-container bg-light py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 text-center">
+                        <i class="#"></i>
+                        <h4>Private Martial Arts Tuition</h4>
+                        <p>per hour</p>
+                        <h1>€15</h1>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="#"></i>
+                        <h4>Use of Fitness Room</h4>
+                        <p>per visit</p>
+                        <h1>€6</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+
+
+    <!-- Description -->
+    <div class="description container">
+        <p>Open your door to a new level of training and achieve your fitness dreams through DoBu Martial Arts! We give you an opportunity to be a part of our memberships especially designed to provide you with the best martial arts classes and develop yourself to the best you. If you are a first-timer highly motivated to learn a new martial art, a parent looking to enroll your child in classes to increase confidence, or an advanced student seeking to fine-tune martial artistry; we have a program that suits your needs. With our Basic plan, you can schedule 2 classes per week in the chosen martial arts; for the Intermediate and Advanced plans, you get more practice time and can train in several martial arts simultaneously. The honor roll of our regular patrons is our Elite, with access to classes as often as you want, igniting your passion for fitness.
+
+            At DoBu Martial Arts, professional and experienced trainers including our head coach Mauricio Gomez 4th Dan Blackbelt, train our individuals in Judo and Jiu-Jitsu, Karate, and Muay Thai. It is something you learn but it is also joining a team deeply invested in healthy living and discipline, respect, and dedication. For those who want personalized attention, a separate martial arts class is also available for hire to achieve your ultimate best, along with personal fitness training. Do not be left behind and miss a place that offers training and where radical change happens. Do not hesitate to get a consultation or join our martial arts classes today with our flexible membership rates and availability at DoBu Martial Arts!
+            
+        </p>
+    </div>
+
+    <!-- ------------------------------ Contact End ----------------------------------->
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>123 Martial Arts Way<br>City, State 12345<br>Phone: (123) 456-7890</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Schedule</a></li>
+                        <li><a href="#" class="text-white">Programs</a></li>
+                        <li><a href="#" class="text-white">Membership</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

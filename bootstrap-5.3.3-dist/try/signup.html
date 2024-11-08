@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO-BU - Sign Up</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&family=Helvetica:wght@400;700&display=swap');
+        
+        :root {
+            --header-font: 'Helvetica', sans-serif;
+            --body-font: 'Arial', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--header-font);
+            font-weight: 700;
+        }
+        
+        body {
+            font-family: var(--body-font);
+            font-weight: 400;
+        }
+        </style>
+
+    <style>
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .step.active {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: #ddd;
+            right: -40px;
+            top: 50%;
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .signup-form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .plan-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            height: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .plan-card:hover {
+            border-color: #dc3545;
+        }
+
+        .plan-card.selected {
+            border-color: #dc3545;
+            background-color: #fff5f5;
+        }
+
+        .plan-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .plan-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 49%, #ddd 49%, #ddd 51%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, #ddd 49%, #ddd 51%, transparent 51%);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .payment-option {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: #0d6efd !important;
+        }
+
+        .payment-option input:checked + label {
+            color: #0d6efd;
+        }
+
+        .payment-option input:checked + label .payment-icon {
+            color: #0d6efd;
+        }
+
+        .payment-option img {
+            max-height: 40px;
+            object-fit: contain;
+        }
+    </style>
+
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!-- ... your existing navbar ... -->
+    </nav>
+
+    <div class="container">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active">1</div>
+            <div class="step">2</div>
+            <div class="step">3</div>
+        </div>
+
+        <!-- Signup Forms -->
+        <div class="signup-form">
+            <!-- Step 1: Initial Signup -->
+            <div class="form-step active" id="step1">
+                <h2 class="text-center mb-4">Sign Up</h2>
+                <form>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" placeholder="Confirm Password">
+                    </div>
+                    <button type="button" class="btn btn-primary w-100" onclick="nextStep(2)">Continue</button>
+                    <div class="text-center mt-3">
+                        <span>Or sign up with:</span>
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-outline-primary me-2">Google</button>
+                            <button type="button" class="btn btn-outline-primary">Facebook</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 2: Plan Selection -->
+            <div class="form-step" id="step2">
+                <h2 class="text-center mb-4">Customize your plan</h2>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="plan-card" data-plan="Basic" data-price="45.00">
+                            <div class="plan-placeholder"></div>
+                            <h5>Basic</h5>
+                            <p class="text-muted">monthly fee $45.00</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="plan-card" data-plan="Standard" data-price="55.00">
+                            <div class="plan-placeholder"></div>
+                            <h5>Standard</h5>
+                            <p class="text-muted">monthly fee $55.00</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="plan-card" data-plan="Premium" data-price="65.00">
+                            <div class="plan-placeholder"></div>
+                            <h5>Premium</h5>
+                            <p class="text-muted">monthly fee $65.00</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="plan-card" data-plan="Elite" data-price="85.00">
+                            <div class="plan-placeholder"></div>
+                            <h5>Elite</h5>
+                            <p class="text-muted">monthly fee $85.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="button" class="btn btn-secondary me-2" onclick="prevStep(1)">Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep(3)">Continue</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Payment -->
+            <div class="form-step" id="step3">
+                <h2 class="text-center mb-4">Payment</h2>
+                <div class="row">
+                    <!-- Left Column: Personal Details -->
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h4 class="mb-3">Personal Details</h4>
+                                <form>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Full Name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Address" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="City" required>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="State" required>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="ZIP" required>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Payment Methods -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3">Payment Method</h4>
+                                
+                                <!-- Payment Options -->
+                                <div class="payment-methods mb-4">
+                                    <div class="row g-3">
+                                        <!-- Credit/Debit Card -->
+                                        <div class="col-md-4">
+                                            <div class="form-check payment-option border rounded p-3">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" checked>
+                                                <label class="form-check-label w-100" for="cardPayment">
+                                                    <img src="assets/images/payments/credit-cards.png" alt="Credit Cards" class="img-fluid mb-2">
+                                                    <div>Credit/Debit Card</div>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- PayPal -->
+                                        <div class="col-md-4">
+                                            <div class="form-check payment-option border rounded p-3">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" id="paypalPayment">
+                                                <label class="form-check-label w-100" for="paypalPayment">
+                                                    <img src="assets/images/payments/paypal.png" alt="PayPal" class="img-fluid mb-2">
+                                                    <div>PayPal</div>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- GCash -->
+                                        <div class="col-md-4">
+                                            <div class="form-check payment-option border rounded p-3">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" id="gcashPayment">
+                                                <label class="form-check-label w-100" for="gcashPayment">
+                                                    <img src="assets/images/payments/gcash.png" alt="GCash" class="img-fluid mb-2">
+                                                    <div>GCash</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Payment Details (Credit Card) -->
+                                <div id="cardDetails" class="payment-details">
+                                    <div class="mb-3">
+                                        <label class="form-label">Card Number</label>
+                                        <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Expiry Date</label>
+                                            <input type="text" class="form-control" placeholder="MM/YY">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">CVV</label>
+                                            <input type="text" class="form-control" placeholder="123">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PayPal Details -->
+                                <div id="paypalDetails" class="payment-details d-none">
+                                    <div class="alert alert-info">
+                                        You will be redirected to PayPal to complete your payment.
+                                    </div>
+                                </div>
+
+                                <!-- GCash Details -->
+                                <div id="gcashDetails" class="payment-details d-none">
+                                    <div class="mb-3">
+                                        <label class="form-label">GCash Number</label>
+                                        <input type="text" class="form-control" placeholder="09XX XXX XXXX">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Order Summary -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3">Membership Overview</h4>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Selected Plan:</span>
+                                    <strong id="selectedPlan">Basic</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Monthly Fee:</span>
+                                    <strong id="monthlyFee">$45.00</strong>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Total Payment:</span>
+                                    <strong id="totalPayment">$45.00</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="mt-4">
+                    <button type="button" class="btn btn-secondary me-2" onclick="prevStep(2)">Back</button>
+                    <button type="button" class="btn btn-primary" onclick="processPayment()">Complete Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function nextStep(step) {
+            document.querySelectorAll('.form-step').forEach(fs => fs.classList.remove('active'));
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            document.querySelectorAll('.step')[step-1].classList.add('active');
+        }
+
+        function prevStep(step) {
+            nextStep(step);
+        }
+
+        function completeSignup() {
+            alert('Signup completed! Thank you for joining DO-BU.');
+            window.location.href = 'index.html';
+        }
+
+        // Plan selection
+        let selectedPlanData = {
+            name: 'Basic',
+            price: '45.00'
+        };
+
+        document.querySelectorAll('.plan-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards
+                document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+                // Add selected class to clicked card
+                this.classList.add('selected');
+                
+                // Update selected plan data
+                selectedPlanData = {
+                    name: this.dataset.plan,
+                    price: this.dataset.price
+                };
+                
+                // Update membership overview
+                updateMembershipOverview();
+            });
+        });
+
+        function updateMembershipOverview() {
+            document.getElementById('selectedPlan').textContent = selectedPlanData.name;
+            document.getElementById('monthlyFee').textContent = `$${selectedPlanData.price}`;
+            document.getElementById('totalPayment').textContent = `$${selectedPlanData.price}`;
+        }
+
+        // Initialize with default plan
+        updateMembershipOverview();
+
+        // Payment method switching
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Hide all payment details
+                document.querySelectorAll('.payment-details').forEach(detail => {
+                    detail.classList.add('d-none');
+                });
+                
+                // Show selected payment details
+                const selectedMethod = this.id;
+                document.getElementById(selectedMethod.replace('Payment', 'Details')).classList.remove('d-none');
+            });
+        });
+
+        function processPayment() {
+            // Get selected payment method
+            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
+            
+            // Validate form fields
+            const requiredFields = document.querySelectorAll('input[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isValid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Show loading state
+            const payButton = document.querySelector('button[onclick="processPayment()"]');
+            const originalText = payButton.innerHTML;
+            payButton.disabled = true;
+            payButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                alert('Payment successful! Welcome to DO-BU Martial Arts!');
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

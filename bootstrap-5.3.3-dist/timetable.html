@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO-BU - Timetable</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+
+    <style>
+        /* Navigation styles */
+        .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.55) !important;
+        }
+        .nav-item .nav-link:hover {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+
+        /* Timetable specific styles */
+        .filter-sidebar {
+            background-color: #242424;
+            color: white;
+            padding: 20px 15px;
+            min-height: 100vh;
+        }
+
+        .date-btn {
+            padding: 10px 20px;
+            border: 1px solid #dee2e6;
+            background: white;
+            min-width: 100px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .date-btn.active {
+            border-color: #dc3545;
+            color: #dc3545;
+            border-width: 2px;
+        }
+
+        .class-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            height: 150px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .class-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .class-card h6 {
+            color: #dc3545;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .class-type {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .time-slot {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Class type colors */
+        .jiu-jitsu { border-left: 4px solid #007bff; }
+        .karate { border-left: 4px solid #28a745; }
+        .muay-thai { border-left: 4px solid #dc3545; }
+        .judo { border-left: 4px solid #ffc107; }
+        .private { border-left: 4px solid #6c757d; }
+        .open-mat { border-left: 4px solid #17a2b8; }
+        .kids { border-left: 4px solid #e83e8c; }
+
+        .time-section h5 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .time-sections {
+            padding: 20px;
+        }
+
+        .accordion-item {
+            background-color: transparent;
+            border: none;
+        }
+
+        .accordion-button {
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: none;
+        }
+
+        .accordion-button::after {
+            filter: invert(1);
+        }
+
+        .accordion-body {
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+        }
+
+        .form-check-label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-check-input {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        .clickable-day {
+            cursor: pointer;
+            color: #0d6efd;
+            transition: color 0.3s ease;
+        }
+
+        .clickable-day:hover {
+            color: #0a58ca;
+            text-decoration: underline;
+        }
+
+        .date-navigation {
+            padding: 20px 0;
+        }
+
+
+        /* Flex container for side alignment */
+        .schedule-container {
+            display: flex;
+            align-items: flex-start; /* Aligns items to the top */
+        }
+
+        /* Day Selector Styling */
+        .day-selector {
+            width: 150px; /* Adjust width to fit your layout */
+            margin-right: 20px; /* Space between selector and schedule */
+        }
+
+        .day-selector button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        /* Class Sections Styling */
+        .time-sections {
+            flex: 1; /* Allows it to take up the remaining space */
+        }
+
+        .time-section {
+            margin-bottom: 20px;
+        }
+
+        /* Optional: Responsive Design */
+        @media (max-width: 768px) {
+            .schedule-container {
+                flex-direction: column;
+            }
+        }
+
+        .navbar-nav .nav-link.active {
+        color: #fff !important; /* Ensure the active link is white */
+    }
+    </style>
+
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/LOGO_Do.png" alt="DO-BU Logo" height="40px" width="86px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="membership.html">Membership & Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html">COURSES</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="timetable.html">TimeTable</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="instructors.html">Instructors</a></li>
+                    <a href="sign-up.html" class="btn btn-light">Join sign-up</a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left Sidebar -->
+            <div class="col-md-2 filter-sidebar">
+                <h5>Filter by</h5>
+                <div class="accordion" id="filterAccordion">
+                    <!-- Martial Arts Filter -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#martialArtsFilter">
+                                <i class="fas fa-fist-raised me-2"></i> Martial Arts
+                            </button>
+                        </h2>
+                        <div id="martialArtsFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="jiu-jitsu" id="jiujitsu">
+                                    <label class="form-check-label" for="jiujitsu">Jiu-jitsu</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="karate" id="karate">
+                                    <label class="form-check-label" for="karate">Karate</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="muay-thai" id="muaythai">
+                                    <label class="form-check-label" for="muaythai">Muay Thai</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="judo" id="judo">
+                                    <label class="form-check-label" for="judo">Judo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructors Filter -->
+                    <div class="accordion-item" hidden>
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#instructorsFilter">
+                                <i class="fas fa-user-tie me-2"></i> Instructors
+                            </button>
+                        </h2>
+                        <div id="instructorsFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="mauricio" id="mauricio">
+                                    <label class="form-check-label" for="mauricio">Mauricio Gomez</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="sarah" id="sarah">
+                                    <label class="form-check-label" for="sarah">Sarah Nova</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="guy" id="guy">
+                                    <label class="form-check-label" for="guy">Guy Victory</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="morris" id="morris">
+                                    <label class="form-check-label" for="morris">Morris Davis</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="traci" id="traci">
+                                    <label class="form-check-label" for="traci">Traci Santiago</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="harpreet" id="harpreet">
+                                    <label class="form-check-label" for="harpreet">Harpreet Kaur</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Levels Filter -->
+                    <div class="accordion-item" hidden>
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#levelsFilter">
+                                <i class="fas fa-layer-group me-2"></i> Levels
+                            </button>
+                        </h2>
+                        <div id="levelsFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                            <div class="accordion-body">
+                                <!-- Add level checkboxes here -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Private Filter -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#privateFilter">
+                                <i class="fas fa-user me-2"></i> Private
+                            </button>
+                        </h2>
+                        <div id="privateFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                            <div class="accordion-body">
+                                <!-- Add private lesson options here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="text-end"><b>Results</b></h2>
+                </div>
+
+                <!-- Date Navigation -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Vertical day buttons on the left -->
+                        <div class="col-md-2">
+                            <div class="date-navigation d-flex flex-column gap-2">
+                                <button class="date-btn" data-day="wednesday">WED</button>
+                                <button class="date-btn" data-day="thursday">THU</button>
+                                <button class="date-btn" data-day="friday">FRI</button>
+                                <button class="date-btn" data-day="saturday">SAT</button>
+                                <button class="date-btn" data-day="sunday">SUN</button>
+                                <button class="date-btn" data-day="monday">MON</button>
+                            </div>
+                        </div>
+
+                <!-- Class Sections -->
+                <div class="time-sections">
+                    <!-- Morning Section (6:00-12:00) -->
+                    <div class="time-section mb-4">
+                        <h5>MORNING</h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="class-card">
+                                    <h6>6:00 - 7:30</h6>
+                                    <div class="class-content">
+                                        <p class="class-type">Jiu-jitsu</p>
+                                        <p class="time-slot">Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="class-card">
+                                    <h6>8:00 - 10:00</h6>
+                                    <div class="class-content">
+                                        <p class="class-type">Muay Thai</p>
+                                        <p class="time-slot">Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="class-card">
+                                    <h6>10:30 - 12:00</h6>
+                                    <div class="class-content">
+                                        <p class="class-type">Private Tuition</p>
+                                        <p class="time-slot">Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Afternoon Section (13:00-17:00) -->
+                    <div class="time-section mb-4">
+                        <h5>AFTERNOON</h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="class-card">
+                                    <h6>13:00 - 14:30</h6>
+                                    <div class="class-content">
+                                        <p class="class-type">Open Mat/Personal Practice</p>
+                                        <p class="time-slot">Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="class-card">
+                                    <h6>15:00 - 17:00</h6>
+                                    <div class="class-content">
+                                        <p class="class-type">Kids Jiu-jitsu</p>
+                                        <p class="time-slot">Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Evening Section (17:30-21:00) -->
+                    <div class="time-section mb-4">
+                        <h5>EVENING</h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="class-card">
+                                    <h6>17:30 - 19:00</h6>
+                                    <div class="class-content">
+                                        <p class="class-type">Karate</p>
+                                        <p class="time-slot">Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="class-card">
+                                    <h6>19:00 - 21:00</h6>
+                                    <div class="class-content">
+                                        <p class="class-type">Jiu-jitsu</p>
+                                        <p class="time-slot">Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>123 Martial Arts Way<br>City, State 12345<br>Phone: (123) 456-7890</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Schedule</a></li>
+                        <li><a href="#" class="text-white">Programs</a></li>
+                        <li><a href="#" class="text-white">Membership</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!----------------------------- Bootstrap JS ------------------------------->
+<script src="js/bootstrap.bundle.min.js"></script>
+
+    
+    <!----------------------------- JavaScript ------------------------------->
+<script>
+        
+const classSchedule = {
+    monday: {
+        morning: [
+            { time: '06:00-07:30', class: 'Jiu-jitsu', type: 'jiu-jitsu', instructor: 'Mauricio Gomez' },
+            { time: '08:00-10:00', class: 'Muay Thai', type: 'muay-thai', instructor: 'Morris Davis' },
+            { time: '10:30-12:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ],
+        afternoon: [
+            { time: '13:00-14:30', class: 'Open Mat/Personal Practice', type: 'open-mat', instructor: 'Guy Victory' },
+            { time: '15:00-17:00', class: 'Kids Jiu-jitsu', type: 'kids', instructor: 'Mauricio Gomez' }
+        ],
+        evening: [
+            { time: '17:30-19:00', class: 'Karate', type: 'karate', instructor: 'Sarah Nova' },
+            { time: '19:00-21:00', class: 'Jiu-jitsu', type: 'jiu-jitsu', instructor: 'Mauricio Gomez' }
+        ]
+    },
+    tuesday: {
+        morning: [
+            { time: '06:00-07:30', class: 'Karate', type: 'karate', instructor: 'Sarah Nova' },
+            { time: '08:00-10:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' },
+            { time: '10:30-12:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ],
+        afternoon: [
+            { time: '13:00-14:30', class: 'Open Mat/Personal Practice', type: 'open-mat', instructor: 'Guy Victory' },
+            { time: '15:00-17:00', class: 'Kids Judo', type: 'kids', instructor: 'Guy Victory' }
+        ],
+        evening: [
+            { time: '17:30-19:00', class: 'Muay Thai', type: 'muay-thai', instructor: 'Morris Davis' },
+            { time: '19:00-21:00', class: 'Judo', type: 'judo', instructor: 'Guy Victory' }
+        ]
+    },
+    wednesday: {
+        morning: [
+            { time: '06:00-07:30', class: 'Judo', type: 'judo', instructor: 'Guy Victory' },
+            { time: '08:00-10:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' },
+            { time: '10:30-12:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ],
+        afternoon: [
+            { time: '13:00-14:30', class: 'Open Mat/Personal Practice', type: 'open-mat', instructor: 'Guy Victory' },
+            { time: '15:00-17:00', class: 'Kids Karate', type: 'kids', instructor: 'Sarah Nova' }
+        ],
+        evening: [
+            { time: '17:30-19:00', class: 'Judo', type: 'judo', instructor: 'Guy Victory' },
+            { time: '19:00-21:00', class: 'Jiu-jitsu', type: 'jiu-jitsu', instructor: 'Mauricio Gomez' }
+        ]
+    },
+    thursday: {
+        morning: [
+            { time: '06:00-07:30', class: 'Jiu-jitsu', type: 'jiu-jitsu', instructor: 'Mauricio Gomez' },
+            { time: '08:00-10:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' },
+            { time: '10:30-12:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ],
+        afternoon: [
+            { time: '13:00-14:30', class: 'Open Mat/Personal Practice', type: 'open-mat', instructor: 'Guy Victory' },
+            { time: '15:00-17:00', class: 'Kids Jiu-jitsu', type: 'kids', instructor: 'Mauricio Gomez' }
+        ],
+        evening: [
+            { time: '17:30-19:00', class: 'Jiu-jitsu', type: 'jiu-jitsu', instructor: 'Mauricio Gomez' },
+            { time: '19:00-21:00', class: 'Karate', type: 'karate', instructor: 'Sarah Nova' }
+        ]
+    },
+    friday: {
+        morning: [
+            { time: '06:00-07:30', class: 'Muay Thai', type: 'muay-thai', instructor: 'Morris Davis' },
+            { time: '08:00-10:00', class: 'Jiu-jitsu', type: 'jiu-jitsu', instructor: 'Mauricio Gomez' },
+            { time: '10:30-12:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ],
+        afternoon: [
+            { time: '13:00-14:30', class: 'Open Mat/Personal Practice', type: 'open-mat', instructor: 'Guy Victory' },
+            { time: '15:00-17:00', class: 'Kids Judo', type: 'kids', instructor: 'Guy Victory' }
+        ],
+        evening: [
+            { time: '17:30-19:00', class: 'Muay Thai', type: 'muay-thai', instructor: 'Morris Davis' },
+            { time: '19:00-21:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ]
+    },
+    saturday: {
+        morning: [
+            { time: '08:00-10:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ],
+        afternoon: [
+            { time: '13:00-14:30', class: 'Karate', type: 'karate', instructor: 'Sarah Nova' }
+        ],
+        evening: [
+            { time: '15:00-17:00', class: 'Muay Thai', type: 'muay-thai', instructor: 'Sarah Nova' }
+        ]
+    },
+    sunday: {
+        morning: [
+            { time: '08:00-10:00', class: 'Private Tuition', type: 'private', instructor: 'Traci Santiago' }
+        ],
+        afternoon: [
+            { time: '13:00-14:30', class: 'Judo', type: 'judo', instructor: 'Guy Victory' }
+        ],
+        evening: [
+            { time: '15:00-17:00', class: 'Jiu-jitsu', type: 'jiu-jitsu', instructor: 'Mauricio Gomez' }
+        ]
+    }
+};
+
+function createClassCard(classInfo, dayName) {
+    return `
+        <div class="col-md-4">
+            <div class="class-card ${classInfo.type}">
+                <h6 class="time-slot" style="color: #dc3545">${classInfo.time}</h6>
+                <div class="class-content">
+                    <p class="class-type">${classInfo.class}</p>
+                    <p class="instructor-name">${classInfo.instructor || ''}</p>
+                    <p class="day-slot" style="color: #666">${dayName}</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function updateSchedule(day) {
+    const schedule = classSchedule[day.toLowerCase()];
+    if (!schedule) return;
+
+    // Update Morning Section
+    const morningSection = document.querySelector('#morning-section .row');
+    morningSection.innerHTML = schedule.morning
+        .map(classInfo => createClassCard(classInfo, day))
+        .join('');
+
+    // Update Afternoon Section
+    const afternoonSection = document.querySelector('#afternoon-section .row');
+    afternoonSection.innerHTML = schedule.afternoon
+        .map(classInfo => createClassCard(classInfo, day))
+        .join('');
+
+    // Update Evening Section
+    const eveningSection = document.querySelector('#evening-section .row');
+    eveningSection.innerHTML = schedule.evening
+        .map(classInfo => createClassCard(classInfo, day))
+        .join('');
+
+    // Reapply any active filters
+    applyFilters();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize empty sections
+    const mainContent = document.querySelector('.time-sections');
+    mainContent.innerHTML = `
+        <div class="time-section mb-4" id="morning-section">
+            <h5>MORNING</h5>
+            <div class="row g-3"></div>
+        </div>
+        <div class="time-section mb-4" id="afternoon-section">
+            <h5>AFTERNOON</h5>
+            <div class="row g-3"></div>
+        </div>
+        <div class="time-section mb-4" id="evening-section">
+            <h5>EVENING</h5>
+            <div class="row g-3"></div>
+        </div>
+    `;
+
+    // Add click handlers to date buttons
+    const dateButtons = document.querySelectorAll('.date-btn');
+    dateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            dateButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            const selectedDay = this.getAttribute('data-day');
+            updateSchedule(selectedDay);
+        });
+    });
+
+    // Dont initialize with any schedule
+});
+
+// Add filter functionality
+function applyFilters() {
+    const selectedMartialArts = Array.from(document.querySelectorAll('#martialArtsFilter input:checked'))
+        .map(checkbox => checkbox.value);
+    const selectedInstructors = Array.from(document.querySelectorAll('#instructorsFilter input:checked'))
+        .map(checkbox => checkbox.value);
+    const selectedLevels = Array.from(document.querySelectorAll('#levelsFilter input:checked'))
+        .map(checkbox => checkbox.value);
+    const selectedPrivate = Array.from(document.querySelectorAll('#privateFilter input:checked'))
+        .map(checkbox => checkbox.value);
+
+    const classCards = document.querySelectorAll('.class-card');
+    
+    classCards.forEach(card => {
+        const classType = card.classList.toString().toLowerCase();
+        const shouldShow = (
+            (selectedMartialArts.length === 0 || selectedMartialArts.some(art => classType.includes(art))) &&
+            (selectedInstructors.length === 0 || selectedInstructors.some(instructor => classType.includes(instructor))) &&
+            (selectedLevels.length === 0 || selectedLevels.some(level => classType.includes(level))) &&
+            (selectedPrivate.length === 0 || 
+                (selectedPrivate.includes('private') && classType.includes('private')) ||
+                (selectedPrivate.includes('group') && !classType.includes('private')))
+        );
+
+        card.style.display = shouldShow ? 'block' : 'none';
+        card.closest('.col-md-4').style.display = shouldShow ? 'block' : 'none';
+    });
+}
+
+// Update sidebar HTML with complete filter options
+document.querySelector('.filter-sidebar').innerHTML = `
+    <h5>Filter by</h5>
+    <div class="accordion" id="filterAccordion">
+        <!-- Martial Arts Filter -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#martialArtsFilter">
+                    <i class="fas fa-fist-raised me-2"></i> Martial Arts
+                </button>
+            </h2>
+            <div id="martialArtsFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="jiu-jitsu" id="jiujitsu">
+                        <label class="form-check-label" for="jiujitsu">Jiu-jitsu</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="karate" id="karate">
+                        <label class="form-check-label" for="karate">Karate</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="muay-thai" id="muaythai">
+                        <label class="form-check-label" for="muaythai">Muay Thai</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="judo" id="judo">
+                        <label class="form-check-label" for="judo">Judo</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructors Filter -->
+        <div class="accordion-item" hidden>
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#instructorsFilter">
+                    <i class="fas fa-user-tie me-2"></i> Instructors
+                </button>
+            </h2>
+            <div id="instructorsFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="mauricio" id="mauricio">
+                        <label class="form-check-label" for="mauricio">Mauricio Gomez</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="sarah" id="sarah">
+                        <label class="form-check-label" for="sarah">Sarah Nova</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="guy" id="guy">
+                        <label class="form-check-label" for="guy">Guy Victory</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="morris" id="morris">
+                        <label class="form-check-label" for="morris">Morris Davis</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="traci" id="traci">
+                        <label class="form-check-label" for="traci">Traci Santiago</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="harpreet" id="harpreet">
+                        <label class="form-check-label" for="harpreet">Harpreet Kaur</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Levels Filter -->
+        <div class="accordion-item" hidden>
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#levelsFilter">
+                    <i class="fas fa-layer-group me-2"></i> Levels
+                </button>
+            </h2>
+            <div id="levelsFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="beginner" id="beginner">
+                        <label class="form-check-label" for="beginner">Beginner</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="intermediate" id="intermediate">
+                        <label class="form-check-label" for="intermediate">Intermediate</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="advanced" id="advanced">
+                        <label class="form-check-label" for="advanced">Advanced</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Private Filter -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#privateFilter">
+                    <i class="fas fa-user me-2"></i> Private
+                </button>
+            </h2>
+            <div id="privateFilter" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="private" id="privateClass">
+                        <label class="form-check-label" for="privateClass">Private Classes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" value="group" id="groupClass">
+                        <label class="form-check-label" for="groupClass">Group Classes</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+
+// Add event listeners for filters
+document.addEventListener('DOMContentLoaded', function() {
+    // Add filter change event listeners
+    const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+    filterCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', applyFilters);
+    });
+
+    // Initialize the schedule
+    updateSchedule('monday');
+});
+
+// Update createClassCard function to include more class information
+function createClassCard(classInfo, dayName) {
+    const classTypes = {
+        'jiu-jitsu': 'Jiu-jitsu',
+        'karate': 'Karate',
+        'muay-thai': 'Muay Thai',
+        'judo': 'Judo',
+        'private': 'Private Tuition',
+        'open-mat': 'Open Mat',
+        'kids': 'Kids Class'
+    };
+
+    return `
+        <div class="col-md-4">
+            <div class="class-card ${classInfo.type}" 
+                 data-class-type="${classInfo.type}"
+                 data-instructor="${classInfo.instructor || ''}"
+                 data-level="${classInfo.level || ''}">
+                <h6>${classInfo.time}</h6>
+                <div class="class-content">
+                    <p class="class-type">${classInfo.class}</p>
+                    <p class="time-slot">${dayName}</p>
+                    ${classInfo.instructor ? `<p class="instructor">Instructor: ${classInfo.instructor}</p>` : ''}
+                    ${classInfo.level ? `<p class="level">Level: ${classInfo.level}</p>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+    </script>
+</body>
+</html> 
