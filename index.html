@@ -142,7 +142,9 @@
                     <li class="nav-item"><a class="nav-link" href="timetable.html">TimeTable</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
                     <li class="nav-item"><a class="nav-link" href="instructors.html">Instructors</a></li>
-                    <li class="nav-item"><a class="btn btn-light join-signup-btn" href="sign-up.html">Join sign-up</a></li>
+                    <li class="nav-item" id="join-signup">
+                        <a class="btn btn-light join-signup-btn" href="sign-up.html">Join sign-up</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -371,9 +373,11 @@
                 <div class="col-md-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Schedule</a></li>
-                        <li><a href="#" class="text-white">Programs</a></li>
-                        <li><a href="#" class="text-white">Membership</a></li>
+                        <li class="nav-item"><a class="nav-link" href="membership.html">Membership & Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="courses.html">Courses</a></li>
+                        <li class="nav-item"><a class="nav-link" href="timetable.html">TimeTable</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="instructors.html">Instructors</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 text-center">
@@ -456,7 +460,30 @@
                 e.preventDefault();
                 const firstName = document.getElementById('firstName').value;
                 const lastName = document.getElementById('lastName').value;
+                const mobileNumber = document.getElementById('mobileNumber').value;
+                const emailAddress = document.getElementById('emailAddress').value;
                 const message = document.getElementById('messageInput').value;
+
+                // Validation
+                if (!firstName || !lastName || !mobileNumber || !emailAddress || !message) {
+                    alert('Please fill in all the required fields.');
+                    return;
+                }
+
+                if (!/^\d+$/.test(mobileNumber)) {
+                    alert('Please enter a valid mobile number.');
+                    return;
+                }
+
+                if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailAddress)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+
+                if (!/^[a-zA-Z\s]+$/.test(firstName) || !/^[a-zA-Z\s]+$/.test(lastName)) {
+                    alert('Please enter a valid name.');
+                    return;
+                }
 
                 const messageEl = document.createElement('div');
                 messageEl.classList.add('chat-message');
