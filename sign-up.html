@@ -345,6 +345,39 @@
                                         <option value="Muay Thai">Muay Thai</option>
                                     </select>
                                 </div>
+                                <div class="payment-methods">
+                                    <h4 class="text-center mb-3">Select Payment Method</h4>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment-method" id="credit-card" value="credit-card">
+                                        <label class="form-check-label" for="credit-card">Credit Card</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment-method" id="paypal" value="paypal">
+                                        <label class="form-check-label" for="paypal">PayPal</label>
+                                    </div>
+                                </div>
+                                <div class="payment-details" id="credit-card-details" style="display: none;">
+                                    <h4 class="text-center mb-3">Credit Card Details</h4>
+                                    <div class="form-group">
+                                        <label for="card-number">Card Number</label>
+                                        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="expiration-date">Expiration Date</label>
+                                        <input type="text" class="form-control" id="expiration-date" placeholder="MM/YY">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cvv">CVV</label>
+                                        <input type="text" class="form-control" id="cvv" placeholder="123">
+                                    </div>
+                                </div>
+                                <div class="payment-details" id="paypal-details" style="display: none;">
+                                    <h4 class="text-center mb-3">PayPal Details</h4>
+                                    <div class="form-group">
+                                        <label for="paypal-email">PayPal Email</label>
+                                        <input type="email" class="form-control" id="paypal-email" placeholder="example@example.com">
+                                    </div>
+                                </div>
                                 <button type="button" class="btn btn-secondary me-2" onclick="prevStep(2)">Back</button>
                                 <button type="button" class="btn btn-success" onclick="completeRegistration()">Complete Registration</button>
                             </form>
@@ -375,6 +408,43 @@
     </div>
 
     <script>
+
+                // ...
+
+        // Payment system
+        $('.payment-methods input[type="radio"]').on('change', function() {
+            var paymentMethod = $(this).val();
+            $('.payment-details').hide();
+            $('#' + paymentMethod + '-details').show();
+        });
+
+        // ...
+
+        // Complete registration
+        function completeRegistration() {
+            // ...
+            var paymentMethod = $('.payment-methods input[type="radio"]:checked').val();
+            var paymentDetails = {};
+            if (paymentMethod === 'credit-card') {
+                paymentDetails = {
+                    cardNumber: $('#card-number').val(),
+                    expirationDate: $('#expiration-date').val(),
+                    cvv: $('#cvv').val()
+                };
+            } else if (paymentMethod === 'paypal') {
+                paymentDetails = {
+                    paypalEmail: $('#paypal-email').val()
+                };
+            }
+            // ...
+            var userObj = {
+                // ...
+                paymentMethod: paymentMethod,
+                paymentDetails: paymentDetails
+            };
+            // ...
+        }
+
         $(document).ready(function() {
             // Initialize jQuery UI tabs
             $("#registration-tabs").tabs();
