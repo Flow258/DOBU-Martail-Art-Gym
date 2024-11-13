@@ -13,7 +13,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
     
     <style>
         .step-indicator {
@@ -424,30 +424,24 @@
         
         
         function validateStep1() {
-            const email = $('#user_email').val();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const name = $('#user_name').val();
-            const nameRegex = /^[a-zA-Z\s]+$/;
+            const email = $('#user_email').val();
+            const password = $('#user_password').val();
 
-            if (!$('#user_name').val()) {
-                showError("Please enter your name");
-                return false;
+            if (!name) {
+                return showError("Please enter your name");
             }
-            if (!nameRegex.test(name)) {
-                showError("Name can only contain letters and spaces");
-                return false; 
+            if (!/^[a-zA-Z\s]+$/i.test(name)) {
+                return showError("Name can only contain letters and spaces");
             }
             if (!email) {
-                showError("Please enter your email");
-                return false;
+                return showError("Please enter your email");
             }
-            if (!emailRegex.test(email)) {
-                showError("Please enter a valid email address");
-                return false;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(email)) {
+                return showError("Please enter a valid email address");
             }
-            if (!$('#user_password').val()) {
-                showError("Please enter a password");
-                return false;
+            if (!password) {
+                return showError("Please enter a password");
             }
             return true;
         }
